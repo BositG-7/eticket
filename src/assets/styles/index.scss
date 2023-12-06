@@ -1,0 +1,13 @@
+@import "font.scss";
+@import "local.scss";
+
+#root {
+   max-width: 1440px;
+   margin: auto;
+}
+* {
+   cursor: pointer;
+}
+.mantine-Image-image {
+   height: 160px !important;
+}
