@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import { Box, Button, Flex, InputBase, Paper, PasswordInput, Text, Title } from '@mantine/core';
+import { Button, Flex, Input, PasswordInput, Text } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { Api, Types } from 'modules/auth';
+// eslint-disable-next-line import/order
+import { IMaskInput } from 'react-imask';
 import { clearSession, clearSessionVerification } from 'services/store';
-
-import cursor from '../../assets/images/cursor.png';
-import threeD from '../../assets/images/threeD.png';
-
-import '../../assets/styles/login.scss';
 
 interface LoginProps {}
 
@@ -19,6 +16,7 @@ const schema = yup.object({
 });
 
 function Login(props: LoginProps) {
+	const [ActiveButton, setActiveButton] = useState('1');
 	const form = useForm<Types.IForm.Login>({
 		initialValues: {
 			username: '',
@@ -49,64 +47,105 @@ function Login(props: LoginProps) {
 	};
 	const navigate = useNavigate();
 
+	const inputStyles = {
+		input: {
+			width: '100%',
+			backgroundColor: '#f0f2f7 !important',
+			fontSize: '18px',
+			fontStyle: 'normal',
+			fontWeight: 400,
+			lineHeight: '20px'
+		}
+	};
+
 	return (
-		<Box h="90vh" w="100%" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '200px' }}>
-			<div className="right">
-				<img src={cursor} alt="cursor" />
-			</div>
-
-			<form onSubmit={form.onSubmit(onLogin)}>
-				<Paper bg="var(--paper-bg)" w={400}>
-					<Flex direction="column" gap={20} align="center" p={20}>
-						<Flex direction="column" gap={15} w="100%">
-							<InputBase autoFocus placeholder="username" radius="sm" {...form.getInputProps('username')} />
-
-							<PasswordInput
-								placeholder="Password"
-								radius="sm"
-								sx={{
-									border: 'none'
-								}}
-								{...form.getInputProps('password')}
-							/>
-							<Title size="12" mt="0">
-								<Link to="/auth/reset-email">Parolingizni unutdingizmi?</Link>
-							</Title>
-
-							<Button
-								loading={loading}
-								type="submit"
-								sx={{
-									borderRadius: '5px',
-									color: 'rgba(0, 106, 255, 1)',
-									height: '50px',
-									backgroundColor: 'rgba(231, 240, 255, 1)',
-									fontSize: '20px'
-								}}>
-								{loading ? 'Loading...' : 'Tizimga kirish'}
-							</Button>
-							<Text
-								size="15px"
-								color="rgba(17, 17, 17, 0.36)"
-								sx={{
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-									gap: '10px',
-									'&:hover': {
-										color: 'white'
-									}
-								}}>
-								Akkauntingiz yo’qmi? unda <Link to="/auth/register">ro’yxatdan o’ting!</Link>
-							</Text>
-						</Flex>
+		<>
+			<Flex mt={100} justify="center" w="100%" h="100vh">
+				<Flex
+					gap={20}
+					direction="column"
+					style={{ borderRadius: '4px', boxShadow: '0 0 10px rgba(23,75,122,.08)' }}
+					h="fit-content"
+					bg="#fff"
+					w="450px"
+					p={24}>
+					<Flex
+						style={{ borderRadius: '4px' }}
+						h="40px"
+						p={15}
+						bg="linear-gradient(0deg,rgba(251,187,0,.15),rgba(251,187,0,.15)),#fff"
+						maw="100%">
+						<Text size={13} color="#b88c09">
+							{' '}
+							Shaxsiy kabinetingizni himoya qilish maqsadida, parolingizni muntazam yangilab turishingizni tavsiya qilamiz.
+						</Text>
 					</Flex>
-				</Paper>
-			</form>
-			<div className="left">
-				<img src={threeD} alt="threeD" />
-			</div>
-		</Box>
+					<Flex gap={5} justify="center" align="center" w="100%">
+						<Button
+							style={{ borderRadius: '10px 0 0 10px!important' }}
+							w="100%"
+							p={10}
+							color="#f0f2f7"
+							onClick={() => {
+								setActiveButton('1');
+							}}
+							bg={ActiveButton === '1' ? '#01c3a7 !important' : '#f0f2f7 !important'}>
+							Telefon
+						</Button>
+						<Button
+							bg={ActiveButton === '2' ? '#01c3a7 !important' : '#f0f2f7 !important'}
+							onClick={() => {
+								setActiveButton('2');
+							}}
+							color="black"
+							p={10}
+							style={{ borderRadius: '10px 0 0 10px!important' }}
+							w="100%">
+							Pochta
+						</Button>
+					</Flex>
+					<form style={{ width: '100%' }}>
+						<Flex w="100%" direction="column" gap={20}>
+							{ActiveButton === '1' && (
+								<>
+									<Input<any>
+										component={IMaskInput}
+										mask="+000 (00) 000-00-00"
+										w="100%"
+										radius={10}
+										styles={inputStyles}
+										placeholder="+998 (00) 000-00-00"
+									/>
+
+									<PasswordInput styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
+								</>
+							)}
+
+							{ActiveButton === '2' && (
+								<>
+									<Input<any> w="100%" radius={10} styles={inputStyles} placeholder="Electron pochta manzilingizni kiriting" />
+
+									<PasswordInput styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
+								</>
+							)}
+						</Flex>
+						<Flex mt={20} justify="center" align="center" w="100%">
+							<Button p="8px 16px" radius="10px" bg="#01c3a7 !important" w="100%">
+								Kirish
+							</Button>
+						</Flex>
+					</form>
+					<Flex justify="space-between" w="100%" align="center">
+						<Link style={{ textDecoration: 'none' }} to="/reset-password">
+							Parolni tiklash
+						</Link>
+						<Link style={{ textDecoration: 'none' }} to="/auth/register">
+							Ro'yhata otish
+						</Link>
+					</Flex>
+				</Flex>
+			</Flex>
+		</>
 	);
 }
 
