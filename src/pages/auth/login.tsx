@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { Button, Flex, Input, PasswordInput, Text } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { Api, Types } from 'modules/auth';
+import { Types } from 'modules/auth';
 // eslint-disable-next-line import/order
 import { IMaskInput } from 'react-imask';
 import { clearSession, clearSessionVerification } from 'services/store';
@@ -11,7 +11,11 @@ import { clearSession, clearSessionVerification } from 'services/store';
 interface LoginProps {}
 
 const schema = yup.object({
-	username: yup.string().min(4).label('Username').required(),
+	phone: yup.number().min(4).label('Phone').required(),
+	password: yup.string().min(1).label('Password').required()
+});
+const schema2 = yup.object({
+	email: yup.string().min(4).label('Email').required(),
 	password: yup.string().min(1).label('Password').required()
 });
 
@@ -19,10 +23,17 @@ function Login(props: LoginProps) {
 	const [ActiveButton, setActiveButton] = useState('1');
 	const form = useForm<Types.IForm.Login>({
 		initialValues: {
-			username: '',
+			phone: '',
 			password: ''
 		},
 		validate: yupResolver(schema)
+	});
+	const form2 = useForm<Types.IForm.Login2>({
+		initialValues: {
+			email: '',
+			password: ''
+		},
+		validate: yupResolver(schema2)
 	});
 
 	useEffect(() => {
@@ -31,20 +42,17 @@ function Login(props: LoginProps) {
 	}, []);
 	const [loading, setLoading] = useState(false);
 
-	const onLogin = async (par: Types.IForm.Login) => {
+	const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		setLoading(true);
-		try {
-			const { data } = await Api.Login(par);
-
-			console.log(data);
-
-			window.location.href = '/';
-		} catch (err: any) {
-			// notifications.show(err.message);
-		} finally {
-			setLoading(false);
-		}
+		e.preventDefault();
+		console.log(form.values);
 	};
+	const list = [
+		{
+			from: 'Toshkent',
+			to: 'Samarqand'
+		}
+	];
 	const navigate = useNavigate();
 
 	const inputStyles = {
@@ -76,7 +84,6 @@ function Login(props: LoginProps) {
 						bg="linear-gradient(0deg,rgba(251,187,0,.15),rgba(251,187,0,.15)),#fff"
 						maw="100%">
 						<Text size={13} color="#b88c09">
-							{' '}
 							Shaxsiy kabinetingizni himoya qilish maqsadida, parolingizni muntazam yangilab turishingizni tavsiya qilamiz.
 						</Text>
 					</Flex>
@@ -104,7 +111,7 @@ function Login(props: LoginProps) {
 							Pochta
 						</Button>
 					</Flex>
-					<form style={{ width: '100%' }}>
+					<form style={{ width: '100%' }} onSubmit={onLogin}>
 						<Flex w="100%" direction="column" gap={20}>
 							{ActiveButton === '1' && (
 								<>
@@ -115,22 +122,29 @@ function Login(props: LoginProps) {
 										radius={10}
 										styles={inputStyles}
 										placeholder="+998 (00) 000-00-00"
+										{...form.getInputProps('phone')}
 									/>
 
-									<PasswordInput styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
+									<PasswordInput {...form.getInputProps('password')} styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
 								</>
 							)}
 
 							{ActiveButton === '2' && (
 								<>
-									<Input<any> w="100%" radius={10} styles={inputStyles} placeholder="Electron pochta manzilingizni kiriting" />
+									<Input<any>
+										{...form2.getInputProps('gmail')}
+										w="100%"
+										radius={10}
+										styles={inputStyles}
+										placeholder="Electron pochta manzilingizni kiriting"
+									/>
 
-									<PasswordInput styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
+									<PasswordInput {...form2.getInputProps('email')} styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
 								</>
 							)}
 						</Flex>
 						<Flex mt={20} justify="center" align="center" w="100%">
-							<Button p="8px 16px" radius="10px" bg="#01c3a7 !important" w="100%">
+							<Button type="submit" p="8px 16px" radius="10px" bg="#01c3a7 !important" w="100%">
 								Kirish
 							</Button>
 						</Flex>
