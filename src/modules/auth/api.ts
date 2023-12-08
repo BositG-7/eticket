@@ -9,4 +9,5 @@ export const Register = ({ ...params }: IApi.Register.Request) =>
 export const Login = ({ ...params }: IApi.Login.Request | IApi.Login2.Request) =>
 	http.post<IApi.Login.Response>('/user/token', objectToFormData({ ...params }));
 export const Profile = () => http.get('/user/me');
+
 export const DeleteUser = () => http.delete('/user/me');
