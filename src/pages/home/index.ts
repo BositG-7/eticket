@@ -1,1 +1,2 @@
-export { default as Home } from "./home";
+export * as Application from './application';
+export * as Trains from './trains';

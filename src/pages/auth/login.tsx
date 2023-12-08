@@ -20,7 +20,7 @@ const schema2 = yup.object({
 });
 
 function Login(props: LoginProps) {
-	const [ActiveButton, setActiveButton] = useState('1');
+	const [ActiveButton, setActiveButton] = useState('2');
 	const form = useForm<Types.IForm.Login>({
 		initialValues: {
 			phone: '',
@@ -88,17 +88,6 @@ function Login(props: LoginProps) {
 						</Text>
 					</Flex>
 					<Flex gap={5} justify="center" align="center" w="100%">
-						<Button
-							style={{ borderRadius: '10px 0 0 10px!important' }}
-							w="100%"
-							p={10}
-							color="#f0f2f7"
-							onClick={() => {
-								setActiveButton('1');
-							}}
-							bg={ActiveButton === '1' ? '#01c3a7 !important' : '#f0f2f7 !important'}>
-							Telefon
-						</Button>
 						<Button
 							bg={ActiveButton === '2' ? '#01c3a7 !important' : '#f0f2f7 !important'}
 							onClick={() => {
