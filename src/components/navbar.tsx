@@ -121,7 +121,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
 							gap: '30px'
 						}}
 						className="loginn">
-						{user ? (
+						{!user ? (
 							<Menu shadow="md" width="max-content" position="bottom-end">
 								<Menu.Target>
 									<Avatar
@@ -129,11 +129,15 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
 										radius="xl"
 										alt="it's me"
 										size="lg"
-										{...(user?.img ? { src: user.img } : { children: user?.username[0]?.toUpperCase() })}
+										{
+											// @ts-expect-error
+											...(user?.img ? { src: user.img } : { children: user?.username[0]?.toUpperCase() })
+										}
 									/>
 								</Menu.Target>
 								<Menu.Dropdown>
 									<Menu.Label sx={{ fontSize: 15 }} color="lime">
+										{/* @ts-ignore */}
 										Hi 👋🏻 {user?.email}
 									</Menu.Label>
 									<Menu.Divider />
