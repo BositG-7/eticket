@@ -87,7 +87,7 @@ function Login(props: LoginProps) {
 							Shaxsiy kabinetingizni himoya qilish maqsadida, parolingizni muntazam yangilab turishingizni tavsiya qilamiz.
 						</Text>
 					</Flex>
-					<Flex gap={5} justify="center" align="center" w="100%">
+					{/* <Flex gap={5} justify="center" align="center" w="100%">
 						<Button
 							bg={ActiveButton === '2' ? '#01c3a7 !important' : '#f0f2f7 !important'}
 							onClick={() => {
@@ -99,7 +99,7 @@ function Login(props: LoginProps) {
 							w="100%">
 							Pochta
 						</Button>
-					</Flex>
+					</Flex> */}
 					<form style={{ width: '100%' }} onSubmit={onLogin}>
 						<Flex w="100%" direction="column" gap={20}>
 							{ActiveButton === '1' && (

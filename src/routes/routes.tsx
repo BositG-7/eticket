@@ -16,6 +16,7 @@ const Routes = () => {
 			<Route path="auth" element={<AuthProtected allowed={!user} redirectURL="/" />}>
 				<Route path="login" element={<Auth.Login />} />
 				<Route path="register" element={<Auth.Register />} />
+				<Route path="reset-password" element={<Auth.Reset.ResetEmail />} />
 
 				<Route path="*" index element={<Navigate to="/auth/login" />} />
 			</Route>

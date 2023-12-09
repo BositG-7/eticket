@@ -1,64 +1,56 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { Button, Flex, Input, PasswordInput, Text } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
 import { Api, Types } from 'modules/auth';
 // eslint-disable-next-line import/order
-import { IMaskInput } from 'react-imask';
-import { clearSessionReset, clearSessionVerification, getSessionVerification } from 'services/store';
+// import { IMaskInput } from 'react-imask';
 
 const schema = yup.object({
-	username: yup.string().min(4).label('Username').required(),
+	name: yup.string().min(4).label('Username').required(),
+	surname: yup.string().min(4).label('Surname').required(),
 	password: yup.string().min(1).label('Password').required(),
-	re_password: yup
-		.string()
-		.oneOf([yup.ref('password')], 'Passwords must match')
-		.label('Confirm password')
-		.required()
+	email: yup.string().min(4).label('Email').required(),
+	birthday: yup.string().min(4).label('Birthday').required()
 });
 
 const Register = () => {
-	const { getInputProps, onSubmit } = useForm<Types.IForm.Register>({
+	const form = useForm<Types.IForm.Register>({
 		initialValues: {
-			first_name: '',
-			last_name: '',
-			username: '',
+			name: '',
+			surname: '',
 			password: '',
-			re_password: ''
+			email: '',
+			birthday: ''
 		},
 		validate: yupResolver(schema)
 	});
-	const [ActiveButton, setActiveButton] = useState('1');
+	const formCheak = useForm<{ code: string; email: string }>({
+		initialValues: {
+			code: '',
+			email: form.values.email
+		}
+	});
 
-	useEffect(() => {
-		clearSessionReset();
-	}, []);
+	const [ActiveButton, setActiveButton] = useState('2');
+	const [ChackCode, setchackCode] = useState(false);
 
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
-	const onRegister = async (data: Types.IForm.Register) => {
+	const onRegister = async (e: React.FormEvent<HTMLFormElement>) => {
 		setLoading(true);
-
-		const { email }: any = getSessionVerification();
+		e.preventDefault();
 
 		try {
-			const requestData = {
-				...data,
-				email
-			};
+			const { data }: any = await Api.Register(form.values);
 
-			await Api.Register(requestData);
+			setchackCode(true);
 
-			navigate('/rules');
-			setLoading(false);
-			clearSessionVerification();
-		} catch (err: any) {
-			notifications.show({
-				message: err.data.username
-			});
-			setLoading(false);
+			console.log(data);
+			formCheak.setValues({ email: form.values.email });
+		} catch (error: any) {
+			console.log(error);
 		}
 	};
 	const inputStyles = {
@@ -69,6 +61,15 @@ const Register = () => {
 			fontStyle: 'normal',
 			fontWeight: 400,
 			lineHeight: '20px'
+		}
+	};
+	const handleCheckCode = () => {
+		try {
+			const { data }: any = Api.Checkpassword(formCheak.values);
+
+			console.log(data);
+		} catch (error: any) {
+			console.log(error);
 		}
 	};
 
@@ -88,7 +89,7 @@ const Register = () => {
 						Shaxsiy kabinetingizni himoya qilish maqsadida, parolingizni muntazam yangilab turishingizni tavsiya qilamiz.
 					</Text>
 				</Flex>
-				<Flex gap={5} justify="center" align="center" w="100%">
+				{/* <Flex gap={5} justify="center" align="center" w="100%">
 					<Button
 						style={{ borderRadius: '10px 0 0 10px!important' }}
 						w="100%"
@@ -111,12 +112,12 @@ const Register = () => {
 						w="100%">
 						Pochta
 					</Button>
-				</Flex>
-				<form style={{ width: '100%' }}>
+				</Flex> */}
+				<form style={{ width: '100%' }} onSubmit={onRegister}>
 					<Flex w="100%" direction="column" gap={20}>
 						{ActiveButton === '1' && (
 							<>
-								<Input<any>
+								{/* <Input<any>
 									component={IMaskInput}
 									mask="+000 (00) 000-00-00"
 									w="100%"
@@ -125,30 +126,84 @@ const Register = () => {
 									placeholder="+998 (00) 000-00-00"
 								/>
 
-								<PasswordInput styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
+								<PasswordInput styles={inputStyles} placeholder="Password" radius="10px" w="100%" /> */}
 							</>
 						)}
 
 						{ActiveButton === '2' && (
 							<>
-								<Input<any> w="100%" radius={10} styles={inputStyles} placeholder="Electron pochta manzilingizni kiriting" />
+								<Input<any>
+									disabled={ChackCode}
+									{...form.getInputProps('name')}
+									w="100%"
+									radius={10}
+									styles={inputStyles}
+									placeholder="Name..."
+								/>
+								<Input<any>
+									disabled={ChackCode}
+									{...form.getInputProps('surname')}
+									w="100%"
+									radius={10}
+									styles={inputStyles}
+									placeholder="Surname..."
+								/>
+								<Input<any>
+									disabled={ChackCode}
+									{...form.getInputProps('email')}
+									w="100%"
+									radius={10}
+									styles={inputStyles}
+									placeholder="Electron pochta manzilingizni kiriting"
+								/>
 
-								<PasswordInput styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
+								<PasswordInput
+									styles={inputStyles}
+									disabled={ChackCode}
+									{...form.getInputProps('password')}
+									placeholder="Password"
+									radius="10px"
+									w="100%"
+								/>
+								<Input
+									type="date"
+									disabled={ChackCode}
+									{...form.getInputProps('birthday')}
+									w="100%"
+									radius={10}
+									styles={inputStyles}
+									placeholder="Birthday"
+								/>
+
+								{ChackCode ? (
+									<Input
+										w="100%"
+										{...formCheak.getInputProps('code')}
+										radius={10}
+										styles={inputStyles}
+										placeholder="Check code tastiqlang"
+									/>
+								) : (
+									''
+								)}
 							</>
 						)}
 					</Flex>
 					<Flex mt={20} justify="center" align="center" w="100%">
-						<Button p="8px 16px" radius="10px" bg="#01c3a7 !important" w="100%">
-							Kirish
-						</Button>
+						{!ChackCode ? (
+							<Button type="submit" p="8px 16px" radius="10px" bg="#01c3a7 !important" w="100%">
+								RO'YXADAN OTISH
+							</Button>
+						) : (
+							<Button onClick={handleCheckCode} p="8px 16px" radius="10px" bg="#01c3a7 !important" w="100%">
+								Tastiqlash
+							</Button>
+						)}
 					</Flex>
 				</form>
-				<Flex justify="space-between" w="100%" align="center">
-					<Link style={{ textDecoration: 'none' }} to="/reset-password">
-						Parolni tiklash
-					</Link>
-					<Link style={{ textDecoration: 'none' }} to="/auth/register">
-						Ro'yhata otish
+				<Flex justify="end" w="100%" align="center">
+					<Link style={{ textDecoration: 'none' }} to="/auth/login">
+						Oldin ro'yxatdan o'tganmisiz? Kirish
 					</Link>
 				</Flex>
 			</Flex>
