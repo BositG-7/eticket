@@ -1,21 +1,20 @@
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import { useAuth } from 'modules/auth/context';
 import { Auth, Home } from 'pages';
-import { getSessionReset, getSessionVerification } from 'services/store';
 
 import AuthProtected from './auth-protected';
 
 const Routes = () => {
 	const { user } = useAuth();
 
-	const verification = getSessionVerification().email;
-	const reset = getSessionReset().email;
+	console.log(user);
 
 	return (
 		<Switch>
 			<Route path="auth" element={<AuthProtected allowed={!user} redirectURL="/" />}>
 				<Route path="login" element={<Auth.Login />} />
 				<Route path="register" element={<Auth.Register />} />
+				<Route path="reset-password" element={<Auth.Reset.ResetEmail />} />
 
 				<Route path="*" index element={<Navigate to="/auth/login" />} />
 			</Route>

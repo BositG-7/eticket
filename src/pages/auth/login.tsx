@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { Button, Flex, Input, PasswordInput, Text } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { Types } from 'modules/auth';
+import { Api, Types } from 'modules/auth';
 // eslint-disable-next-line import/order
 import { IMaskInput } from 'react-imask';
-import { clearSession, clearSessionVerification } from 'services/store';
+import { clearSession, setSession } from 'services/store';
 
 interface LoginProps {}
 
@@ -21,7 +21,6 @@ const schema2 = yup.object({
 
 function Login(props: LoginProps) {
 	const [ActiveButton, setActiveButton] = useState('2');
-	const navigate = useNavigate();
 
 	const form = useForm<Types.IForm.Login>({
 		initialValues: {
@@ -39,7 +38,6 @@ function Login(props: LoginProps) {
 	});
 
 	useEffect(() => {
-		clearSessionVerification();
 		clearSession();
 	}, []);
 
@@ -48,11 +46,20 @@ function Login(props: LoginProps) {
 	const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		setLoading(true);
 		e.preventDefault();
-		console.log(form.values);
+		try {
+			const { data }: any = await Api.Login({ email: form2.values.email, password: form2.values.password });
+
+			setSession(data);
+
+			window.location.href = '/';
+		} catch (error: any) {
+			console.log({ email: form2.values.email, password: form2.values.password });
+
+			console.log(error);
+		}
 	};
 
-	const list = [{ from: 'Toshkent', to: 'Samarqand' }];
-
+	const navigate = useNavigate();
 
 	const inputStyles = {
 		input: {
@@ -86,7 +93,7 @@ function Login(props: LoginProps) {
 							Shaxsiy kabinetingizni himoya qilish maqsadida, parolingizni muntazam yangilab turishingizni tavsiya qilamiz.
 						</Text>
 					</Flex>
-					<Flex gap={5} justify="center" align="center" w="100%">
+					{/* <Flex gap={5} justify="center" align="center" w="100%">
 						<Button
 							bg={ActiveButton === '2' ? '#01c3a7 !important' : '#f0f2f7 !important'}
 							onClick={() => {
@@ -98,7 +105,7 @@ function Login(props: LoginProps) {
 							w="100%">
 							Pochta
 						</Button>
-					</Flex>
+					</Flex> */}
 					<form style={{ width: '100%' }} onSubmit={onLogin}>
 						<Flex w="100%" direction="column" gap={20}>
 							{ActiveButton === '1' && (
@@ -120,14 +127,14 @@ function Login(props: LoginProps) {
 							{ActiveButton === '2' && (
 								<>
 									<Input<any>
-										{...form2.getInputProps('gmail')}
+										{...form2.getInputProps('email')}
 										w="100%"
 										radius={10}
 										styles={inputStyles}
 										placeholder="Electron pochta manzilingizni kiriting"
 									/>
 
-									<PasswordInput {...form2.getInputProps('email')} styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
+									<PasswordInput {...form2.getInputProps('password')} styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
 								</>
 							)}
 						</Flex>
@@ -138,7 +145,7 @@ function Login(props: LoginProps) {
 						</Flex>
 					</form>
 					<Flex justify="space-between" w="100%" align="center">
-						<Link style={{ textDecoration: 'none' }} to="/reset-password">
+						<Link style={{ textDecoration: 'none' }} to="/auth/reset-password">
 							Parolni tiklash
 						</Link>
 						<Link style={{ textDecoration: 'none' }} to="/auth/register">

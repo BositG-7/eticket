@@ -18,8 +18,8 @@ export namespace IEntity {
 	}
 	export interface Tokens {
 		email: any;
-		access: string;
-		refresh: string;
+		accessToken: string;
+		refreshToken: string;
 	}
 }
 export namespace IForm {
@@ -33,11 +33,11 @@ export namespace IForm {
 	}
 
 	export interface Register {
-		first_name: string;
-		last_name: string;
-		username: string;
+		birthday: string;
+		email: string;
+		name: string;
 		password: string;
-		re_password: string;
+		surname: string;
 	}
 	export interface Verification {
 		email: string;
@@ -115,7 +115,7 @@ export namespace IApi {
 	export namespace Checkpassword {
 		export type Request = {
 			email: string;
-			activation_code: number | null;
+			code: string;
 		};
 	}
 	export namespace EditProfil {
