@@ -13,8 +13,7 @@ import { Routes } from 'routes';
 import { QueryParamProvider } from 'use-query-params';
 import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 
-import Navbar from 'components/navbar';
-
+// import Navbar from 'components/navbar';
 import './assets/style.css';
 import 'react-phone-input-2/lib/style.css';
 
@@ -37,7 +36,7 @@ root.render(
 							<Notifications position="top-right" />
 
 							{/* Sayfa üstündeki gezinme çubuğunu oluşturun */}
-							<Navbar />
+							{/* <Navbar /> */}
 
 							{/* Sayfa içeriğini ve rotaları oluşturun */}
 							<Routes />

@@ -44,10 +44,7 @@ const Register = () => {
 		const { email }: any = getSessionVerification();
 
 		try {
-			const requestData = {
-				...data,
-				email
-			};
+			const requestData = { ...data, email };
 
 			await Api.Register(requestData);
 
@@ -61,6 +58,7 @@ const Register = () => {
 			setLoading(false);
 		}
 	};
+
 	const inputStyles = {
 		input: {
 			width: '100%',

@@ -1,0 +1,68 @@
+/* section 1 */
+.home {
+	display: flex;
+	flex-direction: column;
+	background-image: url(https://eticket.railway.uz/assets/img/home/header.jpg);
+	min-height: 350px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: relative;
+	.home_search {
+		max-width: 1310px;
+		padding: 0 15px;
+		margin: 0 auto;
+		width: 100%;
+		.home_info {
+			color: #fff;
+			margin-top: 40px;
+			padding: 10px 0;
+			.home_info--buy {
+				font-size: 42px;
+				line-height: 52px;
+				font-weight: 700;
+				margin: 0;
+				margin-bottom: 15px;
+				font: 400 42px/28px Roboto, Helvetica Neue, sans-serif;
+			}
+			.home_info--content {
+				font-size: 20px;
+				line-height: 24px;
+				margin: 0;
+				padding-top: 5px;
+			}
+		}
+	}
+}
+
+/* section 2 */
+.advertisement {
+	background-color: #f0f2f7;
+	padding-top: 130px;
+	.check_links {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 20px;
+		padding-bottom: 40px;
+		margin-left: 50px;
+	}
+}
+
+/* section 3 */
+
+.check {
+	background-color: #fff;
+	padding: 60px 0;
+	.home_search {
+		max-width: 1310px;
+		padding: 0 15px;
+		margin: 0 auto;
+		width: 100%;
+		.check_grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-gap: 30px;
+		}
+	}
+}
