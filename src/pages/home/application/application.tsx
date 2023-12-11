@@ -37,9 +37,9 @@ const Application: FunctionComponent<ApplicationProps> = () => {
 			{/* section 2 ----- link section */}
 			<section className="advertisement">
 				<Box className="check_links">
-					<LinkButton />
-					<LinkButton />
-					<LinkButton />
+					<LinkButton url="https://eticket.railway.uz/assets/img/svg/telegram.svg" text="@jd_answer_bot" />
+					<LinkButton url="https://eticket.railway.uz/assets/img/svg/telegram.svg" text="Sun'iy Intellekt Bot Beta" />
+					<LinkButton url="https://eticket.railway.uz/assets/img/svg/call.svg" text="Call-center: 1005" />
 				</Box>
 			</section>
 
