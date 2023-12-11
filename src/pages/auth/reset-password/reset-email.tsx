@@ -1,10 +1,9 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { Button, Flex, Input, Text } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { Types } from 'modules/auth';
-import { clearSessionReset } from 'services/store';
+import { Api, Types } from 'modules/auth';
 
 interface ResetEmailProps {}
 
@@ -21,20 +20,26 @@ const ResetEmail: FunctionComponent<ResetEmailProps> = () => {
 		},
 		validate: yupResolver(schema)
 	});
-	const formCheak = useForm<{ code: string }>({
+	const formCheak = useForm<{ code: string; email: string }>({
 		initialValues: {
-			code: ''
+			code: '',
+			email: ''
 		},
 		validate: yupResolver(schema)
 	});
 	const navigete = useNavigate();
 
-	useEffect(() => {
-		clearSessionReset();
-	}, []);
 	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(form.values);
+		try {
+			const { data } = await Api.ResetEmaill(form.values);
+
+			formCheak.setValues({ email: form.values.email });
+
+			console.log(data);
+		} catch (error: any) {
+			console.log(error);
+		}
 
 		setchackCode(true);
 	};
@@ -106,8 +111,8 @@ const ResetEmail: FunctionComponent<ResetEmailProps> = () => {
 					</Flex>
 				</form>
 				<Flex justify="space-between" w="100%" align="center">
-					<Link style={{ textDecoration: 'none' }} to="/reset-password">
-						Parolni tiklash
+					<Link style={{ textDecoration: 'none' }} to="/auth/login">
+						Kirish
 					</Link>
 					<Link style={{ textDecoration: 'none' }} to="/auth/register">
 						Ro'yhata otish

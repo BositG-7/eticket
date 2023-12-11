@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { Button, Flex, Input, PasswordInput, Text } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
 import { Api, Types } from 'modules/auth';
 // eslint-disable-next-line import/order
 // import { IMaskInput } from 'react-imask';
@@ -42,13 +43,14 @@ const Register = () => {
 		setLoading(true);
 		e.preventDefault();
 
+		setchackCode(true);
 		try {
 			const { data }: any = await Api.Register(form.values);
 
-			setchackCode(true);
-
 			console.log(data);
 			formCheak.setValues({ email: form.values.email });
+
+			notifications.show({ message: 'Check kodni tastiqlang ', color: 'green' });
 		} catch (error: any) {
 			console.log(error);
 		}
@@ -68,6 +70,7 @@ const Register = () => {
 			const { data }: any = Api.Checkpassword(formCheak.values);
 
 			console.log(data);
+			navigate('/auth/login');
 		} catch (error: any) {
 			console.log(error);
 		}

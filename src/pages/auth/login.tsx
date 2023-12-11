@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { Button, Flex, Input, PasswordInput, Text } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
-import { Types } from 'modules/auth';
+import { Api, Types } from 'modules/auth';
 // eslint-disable-next-line import/order
 import { IMaskInput } from 'react-imask';
-import { clearSession, clearSessionVerification } from 'services/store';
+import { clearSession, setSession } from 'services/store';
 
 interface LoginProps {}
 
@@ -37,7 +37,6 @@ function Login(props: LoginProps) {
 	});
 
 	useEffect(() => {
-		clearSessionVerification();
 		clearSession();
 	}, []);
 	const [loading, setLoading] = useState(false);
@@ -45,14 +44,19 @@ function Login(props: LoginProps) {
 	const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		setLoading(true);
 		e.preventDefault();
-		console.log(form.values);
-	};
-	const list = [
-		{
-			from: 'Toshkent',
-			to: 'Samarqand'
+		try {
+			const { data }: any = await Api.Login({ email: form2.values.email, password: form2.values.password });
+
+			setSession(data);
+
+			window.location.href = '/';
+		} catch (error: any) {
+			console.log({ email: form2.values.email, password: form2.values.password });
+
+			console.log(error);
 		}
-	];
+	};
+
 	const navigate = useNavigate();
 
 	const inputStyles = {
@@ -121,14 +125,14 @@ function Login(props: LoginProps) {
 							{ActiveButton === '2' && (
 								<>
 									<Input<any>
-										{...form2.getInputProps('gmail')}
+										{...form2.getInputProps('email')}
 										w="100%"
 										radius={10}
 										styles={inputStyles}
 										placeholder="Electron pochta manzilingizni kiriting"
 									/>
 
-									<PasswordInput {...form2.getInputProps('email')} styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
+									<PasswordInput {...form2.getInputProps('password')} styles={inputStyles} placeholder="Password" radius="10px" w="100%" />
 								</>
 							)}
 						</Flex>
@@ -139,7 +143,7 @@ function Login(props: LoginProps) {
 						</Flex>
 					</form>
 					<Flex justify="space-between" w="100%" align="center">
-						<Link style={{ textDecoration: 'none' }} to="/reset-password">
+						<Link style={{ textDecoration: 'none' }} to="/auth/reset-password">
 							Parolni tiklash
 						</Link>
 						<Link style={{ textDecoration: 'none' }} to="/auth/register">

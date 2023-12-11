@@ -11,11 +11,11 @@ const http = axios.create({ baseURL: config.api.baseURL });
 
 http.interceptors.request.use(
 	(request: { headers: any }) => {
-		const { access = '' } = getSession();
+		const { accessToken = '' } = getSession();
 
 		request.headers = {
 			...request.headers,
-			...(access ? { Authorization: `Bearer ${access}` } : {})
+			...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {})
 		};
 
 		return request;

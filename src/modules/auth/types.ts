@@ -18,8 +18,8 @@ export namespace IEntity {
 	}
 	export interface Tokens {
 		email: any;
-		access: string;
-		refresh: string;
+		accessToken: string;
+		refreshToken: string;
 	}
 }
 export namespace IForm {
