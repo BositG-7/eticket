@@ -55,6 +55,7 @@ const Register = () => {
 			console.log(error);
 		}
 	};
+
 	const inputStyles = {
 		input: {
 			width: '100%',

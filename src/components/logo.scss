@@ -1,0 +1,26 @@
+.site-logo {
+ display: flex;
+ align-items: center;
+ text-decoration: none;
+}
+
+.site-logo__img {
+ margin-right: 8px;
+}
+
+.site-logo__text {
+ font-size: 12px;
+ line-height: 16px;
+ color: #fff;
+}
+
+.site-logo__bottom {
+ display: block;
+ font-weight: 700;
+}
+
+.site-logo__top {
+ display: block;
+ font-weight: 300;
+ letter-spacing: .8px;
+}

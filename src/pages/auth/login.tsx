@@ -21,6 +21,7 @@ const schema2 = yup.object({
 
 function Login(props: LoginProps) {
 	const [ActiveButton, setActiveButton] = useState('2');
+
 	const form = useForm<Types.IForm.Login>({
 		initialValues: {
 			phone: '',
@@ -39,6 +40,7 @@ function Login(props: LoginProps) {
 	useEffect(() => {
 		clearSession();
 	}, []);
+
 	const [loading, setLoading] = useState(false);
 
 	const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {

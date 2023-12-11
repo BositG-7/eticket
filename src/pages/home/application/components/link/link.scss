@@ -1,0 +1,23 @@
+.link {
+	background-color: #fff;
+	border-radius: 100px;
+	padding: 6px 12px 6px 6px;
+	box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+	a {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		color: #000 !important;
+		text-decoration: none;
+		.svg_wrapper {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.check_text {
+			font-size: 18px;
+			line-height: 24px;
+			font-weight: 700;
+		}
+	}
+}

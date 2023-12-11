@@ -1,0 +1,88 @@
+.search__input--wrapper {
+	position: absolute;
+	bottom: -68px;
+	left: 300px;
+	width: 1000px;
+	.search_card {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		padding: 1px 20px;
+		border-radius: 15px;
+		background-color: #fff;
+		min-height: 140px;
+		box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.12156862745098039);
+		.search_input_wrapper {
+			display: flex;
+			align-items: center;
+			position: relative;
+			.search_input_wrapper_icon {
+				position: absolute;
+				padding: 0 5px;
+				border-right: 1px solid #d2d8eb;
+				margin-left: 15px;
+				z-index: 1;
+			}
+			input {
+				min-height: 54px;
+				gap: 12px;
+				border-radius: 10px;
+				background-color: #f0f2f7;
+				padding: 15px 15px 15px 60px;
+				outline: none;
+				border: 1px solid #f0f2f7;
+			}
+			input:focus {
+				border: 1px solid #01c3a7;
+				box-shadow: none !important;
+			}
+		}
+
+		.search_input_change,
+		.search_input_submit {
+			width: 50px;
+			height: 54px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #01c3a7;
+			border-radius: 10px;
+			cursor: pointer;
+			border: none;
+		}
+
+		.datepicker {
+			height: 100%;
+			position: relative;
+			.datepicker__modal {
+				position: absolute;
+				top: 15px;
+				left: 20px;
+				z-index: 1;
+				display: flex;
+				padding-right: 9px;
+				background-color: initial;
+				border-right: 1px solid #d2d8eb;
+				height: 25px;
+			}
+			.datepicker__input {
+				min-height: 44px;
+				padding: 8px 15px 0px 60px;
+				font-weight: 400;
+				font-size: 14px;
+				line-height: 20px;
+				color: #354356;
+				border: 1px solid #f0f2f7;
+				background-color: #f0f2f7;
+				border-radius: 10px;
+				transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+			}
+			.datepicker__input:focus {
+				border: none;
+				outline: none;
+				box-shadow: none !important;
+			}
+		}
+	}
+}
