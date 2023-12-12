@@ -119,12 +119,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
 									</span>
 									<span className="site-nav__text">Poyezdlar jadvali</span>
 								</Link>
-								<Link
-									to="/home"
-									className="site-nav__link"
-									onClick={() => {
-										navigate('/auth/login');
-									}}>
+								<Link to="/auth/login" className="site-nav__link">
 									<span className="site-nav__icon">
 										<img src="https://eticket.railway.uz/assets/img/svg/avatar.svg" alt="avatar icon" />
 									</span>
@@ -172,7 +167,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
 									<Menu.Divider />
 									<Menu.Item
 										onClick={() => {
-											navigate('/auth');
+											navigate('/auth/login');
 										}}
 										icon={<IconSettings size={10} />}>
 										Kirish

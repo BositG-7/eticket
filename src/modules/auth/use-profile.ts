@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import { clearSession, getSession } from 'services/store';
+import { getSession } from 'services/store';
 
 import { Api, Mappers, Types } from '.';
 
@@ -22,7 +22,6 @@ const useProfile = (): [State, Dispatch<SetStateAction<State>>] => {
 
 				setState({ user, isLoading: false });
 			} catch (err: any) {
-				clearSession();
 				setState({ user: null, isLoading: false });
 			}
 		};
