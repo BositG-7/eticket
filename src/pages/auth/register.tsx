@@ -43,16 +43,19 @@ const Register = () => {
 		setLoading(true);
 		e.preventDefault();
 
-		setchackCode(true);
 		try {
 			const { data }: any = await Api.Register(form.values);
 
 			console.log(data);
 			formCheak.setValues({ email: form.values.email });
+			setchackCode(true);
 
 			notifications.show({ message: 'Check kodni tastiqlang ', color: 'green' });
 		} catch (error: any) {
 			console.log(error);
+			notifications.show({ message: error.data, color: 'red' });
+
+			console.log(error.data);
 		}
 	};
 
