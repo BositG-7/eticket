@@ -1,16 +1,34 @@
 import { useState } from 'react';
-import { CloseButton, Input } from '@mantine/core';
+import * as yup from 'yup';
+import { Input } from '@mantine/core';
+import { useForm, yupResolver } from '@mantine/form';
 
 import './right-checking.scss';
 
+const schema = yup.object({
+	check: yup.string().required('chiptani kiriting')
+});
+
 const RightChecking = () => {
 	const [value, setValue] = useState('');
-	const i = 0;
+
+	const { getInputProps, onSubmit } = useForm({
+		initialValues: { check: '' },
+		validate: yupResolver(schema)
+	});
+
+	const CheckTicket = async (value: any) => {
+		try {
+			console.log('check-ticket value =>', value);
+		} catch (err: any) {
+			console.log('error =>', err);
+		}
+	};
 
 	return (
 		<div className="check_ticket_input w-100">
 			<div>
-				<h3> Chiptaning haqiqiyligini tekshiring</h3>
+				<h3>Chiptaning haqiqiyligini tekshiring</h3>
 			</div>
 			<div className="check_warning">
 				<div>
@@ -28,7 +46,7 @@ const RightChecking = () => {
 				</p>
 			</div>
 			<div className="check_ticket_input_item w-100">
-				<form className="ng-untouched ng-pristine ng-invalid">
+				<form onSubmit={onSubmit(CheckTicket)} className="ng-untouched ng-pristine ng-invalid">
 					<div className="check_input_wrapper w-100">
 						<div className="svg">
 							<svg width={24} height={25} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,15 +59,15 @@ const RightChecking = () => {
 							</svg>
 						</div>
 						<div className="w-100">
-							<Input
-								placeholder="Clearable input"
-								value={value}
-								onChange={event => setValue(event.currentTarget.value)}
-								mt="md"
-								rightSection={
-									<CloseButton aria-label="Clear input" onClick={() => setValue('')} style={{ display: value ? undefined : 'none' }} />
-								}
-							/>
+							<Input {...getInputProps('check')} placeholder="Elektron chipta (raqam)" mt="md" />
+							<div className="remove" onClick={() => getInputProps('')}>
+								<svg width="23" height="24" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M8 12.5L10 10.5M10 10.5L12 8.5M10 10.5L8 8.5M10 10.5L12 12.5M19 10.5C19 15.4706 14.9706 19.5 10 19.5C5.02944 19.5 1 15.4706 1 10.5C1 5.52944 5.02944 1.5 10 1.5C14.9706 1.5 19 5.52944 19 10.5Z"
+										stroke="#D2D8EB"
+									/>
+								</svg>
+							</div>
 						</div>
 					</div>
 					<button type="submit" className="check_btn w-100 mt-3">

@@ -1,0 +1,88 @@
+.my-container {
+	margin-top: 102px;
+	padding: 0 65px;
+	padding-left: 110px;
+	.process__items {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+		align-self: stretch;
+		overflow-x: auto;
+		padding: 30px 0 20px;
+	}
+}
+
+/* section 4  👋👋👋 */
+
+.train_direction {
+	margin-top: 120px;
+	padding: 0px 110px;
+	/* train-header */
+	.train_header {
+		.train__dep_time {
+			font: 400 calc(14px * 0.83) / 20px Roboto, Helvetica Neue, sans-serif;
+			margin: 0 0 12px;
+			font-weight: 700;
+			font-size: 16px;
+			line-height: 20px;
+		}
+		.train__arr_station {
+			font: 400 calc(14px * 0.83) / 20px Roboto, Helvetica Neue, sans-serif;
+			margin: 0 0 12px;
+			font-weight: 700;
+			font-size: 42px;
+			line-height: 52px;
+			span {
+				color: #01c3a7;
+			}
+		}
+	}
+
+	/* train_change--dates */
+	.train_change--dates {
+		.close-dates {
+			list-style: none;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-top: 9px;
+			gap: 7px;
+			overflow-x: auto;
+			padding: 6px 1px;
+			-ms-overflow-style: none;
+			scrollbar-width: 0px;
+			.close-dates__item {
+				font-family: Segoe UI, sans-serif !important;
+				cursor: pointer;
+				display: inline-block;
+				padding: 10px;
+				width: 150px;
+				min-width: 120px;
+				font-size: 15px;
+				text-align: center;
+				border-radius: 10px;
+				height: 17px;
+				line-height: 16px;
+				background-color: #fff;
+				box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
+			}
+			.selected {
+				background-color: #01c3a7;
+				color: #fff;
+			}
+		}
+	}
+
+	/* train_time_info */
+	.train_time_info {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-bottom: 30px;
+		p {
+			font-size: 14px;
+			line-height: 14px;
+			color: #b0b0c6;
+		}
+	}
+}

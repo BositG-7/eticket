@@ -1,28 +1,41 @@
 import * as yup from 'yup';
-import { Box, Select } from '@mantine/core';
+import { Box, Button, Select } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
+import { useForm, yupResolver } from '@mantine/form';
 
 import { viloyatlar } from './constants';
 
 import './search-filter.scss';
 
 const schema = yup.object({
-	from: yup.string().label('from').required(),
-	to: yup.string().label('to').required()
+	from: yup.string().label('from').required('qayerdan borishingizni belgilang'),
+	to: yup.string().label('to').required('qayerga borishingizni belgilang'),
+	designatedTime: yup.string().label('time').required('ketish vaqtingizni belgilang')
 });
 
 const SearchFilter = () => {
-	const i = 0;
+	const { getInputProps, onSubmit } = useForm({
+		initialValues: { from: '', to: '', designatedTime: '' },
+		validate: yupResolver(schema)
+	});
+
+	const SearchedFlight = async (value: any) => {
+		try {
+			console.log('search-filter value =>', value);
+		} catch (err: any) {
+			console.log('error =>', err);
+		}
+	};
 
 	return (
 		<>
 			<Box className="search__input--wrapper">
-				<form className="search_card">
+				<form onSubmit={onSubmit(SearchedFlight)} className="search_card">
 					<Box className="search_input_wrapper">
 						<div className="search_input_wrapper_icon">
 							<img src="https://eticket.railway.uz/uz/assets/img/svg/destination.svg" alt="asset" />
 						</div>
-						<Select variant="filled" placeholder="Qayerdan" data={viloyatlar} searchable />
+						<Select {...getInputProps('from')} variant="filled" placeholder="Qayerdan" data={viloyatlar} searchable />
 					</Box>
 
 					<Box className="search_input_change">
@@ -33,7 +46,7 @@ const SearchFilter = () => {
 						<div className="search_input_wrapper_icon">
 							<img src="https://eticket.railway.uz/uz/assets/img/svg/destination.svg" alt="asset" />
 						</div>
-						<Select variant="filled" placeholder="Qayerga" data={viloyatlar} searchable />
+						<Select {...getInputProps('to')} variant="filled" placeholder="Qayerga" data={viloyatlar} searchable />
 					</Box>
 
 					<Box className="datepicker">
@@ -41,12 +54,12 @@ const SearchFilter = () => {
 							<img src="https://eticket.railway.uz/assets/img/svg/calendar.svg" alt="calendar icon" className="datepicker__icon" />
 						</div>
 
-						<DateInput className="datepicker__input" variant="filled" placeholder="Input placeholder" />
+						<DateInput {...getInputProps('designatedTime')} className="datepicker__input" variant="filled" placeholder="Input placeholder" />
 					</Box>
 
-					<button className="search_input_submit">
+					<Button type="submit" className="search_input_submit">
 						<img src="https://eticket.railway.uz/uz/assets/img/svg/search.svg" alt="search" />
-					</button>
+					</Button>
 				</form>
 			</Box>
 		</>

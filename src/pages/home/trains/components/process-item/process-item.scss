@@ -1,0 +1,37 @@
+.process__item {
+	display: flex;
+	align-items: center;
+	padding: 6px 14px 6px 6px;
+	gap: 10px;
+	cursor: pointer;
+	flex: 1 0 0;
+	border-radius: 100px;
+	background: var(--accents-white, #fff);
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
+	.process--icon {
+		width: 22px;
+		height: 22px;
+		padding: 5px;
+		border-radius: 50%;
+		background-color: #b0b0c6;
+		justify-content: center;
+		display: flex;
+		align-items: center;
+	}
+	.process--text {
+		font-weight: 700;
+		font-size: 18px;
+		white-space: nowrap;
+		color: #b0b0c6;
+	}
+}
+
+.active {
+	background-color: #01c3a7;
+	.process--icon {
+		background-color: #fff;
+	}
+	.process--text {
+		color: #fff;
+	}
+}

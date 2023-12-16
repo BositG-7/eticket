@@ -29,7 +29,7 @@ const Application: FunctionComponent<ApplicationProps> = () => {
 					</div>
 				</Box>
 
-				<Box sx={{ display: 'grid', placeItems: 'center' }}>
+				<Box sx={{ display: 'grid', placeItems: 'center', marginTop: '168px' }}>
 					<SearchFilter />
 				</Box>
 			</section>
