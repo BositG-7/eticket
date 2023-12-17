@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import { Button, Flex, Input, Text } from '@mantine/core';
+import { Button, Flex, Input, PasswordInput, Text } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import { Api, Types } from 'modules/auth';
 
@@ -20,10 +20,11 @@ const ResetEmail: FunctionComponent<ResetEmailProps> = () => {
 		},
 		validate: yupResolver(schema)
 	});
-	const formCheak = useForm<{ code: string; email: string }>({
+	const formCheak = useForm<{ activationCode: string; email: string; newPassword: string }>({
 		initialValues: {
-			code: '',
-			email: ''
+			activationCode: '',
+			email: '',
+			newPassword: ''
 		},
 		validate: yupResolver(schema)
 	});
@@ -35,25 +36,23 @@ const ResetEmail: FunctionComponent<ResetEmailProps> = () => {
 			const { data } = await Api.ResetEmaill(form.values);
 
 			formCheak.setValues({ email: form.values.email });
+			setchackCode(true);
+			console.log(data);
+		} catch (error: any) {
+			console.log(error);
+		}
+	};
+
+	const handleCheckCode = () => {
+		console.log(formCheak.values);
+
+		try {
+			const { data }: any = Api.ResetPassword(formCheak.values);
 
 			console.log(data);
 		} catch (error: any) {
 			console.log(error);
 		}
-
-		setchackCode(true);
-	};
-
-	const handleCheckCode = () => {
-		console.log('ddqw');
-
-		// try {
-		// 	const { data }: any = Api.Checkpassword(formCheak.values);
-
-		// 	console.log(data);
-		// } catch (error: any) {
-		// 	console.log(error);
-		// }
 	};
 	const inputStyles = {
 		input: {
@@ -93,7 +92,23 @@ const ResetEmail: FunctionComponent<ResetEmailProps> = () => {
 							placeholder="Electron pochta manzilingizni kiriting"
 						/>
 						{ChackCode ? (
-							<Input w="100%" {...formCheak.getInputProps('code')} radius={10} styles={inputStyles} placeholder="Check code tastiqlang" />
+							<>
+								<Input
+									w="100%"
+									{...formCheak.getInputProps('activationCode')}
+									radius={10}
+									styles={inputStyles}
+									placeholder="Check code tastiqlang"
+								/>
+
+								<PasswordInput
+									w="100%"
+									{...formCheak.getInputProps('newPassword')}
+									radius={10}
+									styles={inputStyles}
+									placeholder="Check code tastiqlang"
+								/>
+							</>
 						) : (
 							''
 						)}

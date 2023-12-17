@@ -7,7 +7,7 @@ import AuthProtected from './auth-protected';
 const Routes = () => {
 	const { user } = useAuth();
 
-	console.log(user);
+	console.log('user =>', user);
 
 	return (
 		<Switch>

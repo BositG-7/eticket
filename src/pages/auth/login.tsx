@@ -63,7 +63,7 @@ function Login(props: LoginProps) {
 
 	const inputStyles = {
 		input: {
-			width: '100%',
+			width: '400px',
 			backgroundColor: '#f0f2f7 !important',
 			fontSize: '18px',
 			fontStyle: 'normal',

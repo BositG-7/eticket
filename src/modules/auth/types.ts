@@ -107,9 +107,8 @@ export namespace IApi {
 	export namespace ResetPassword {
 		export type Request = {
 			email: string;
-			activation_code: number;
-			new_password: string;
-			confirm_password: string;
+			activationCode: string;
+			newPassword: string;
 		};
 	}
 	export namespace Checkpassword {

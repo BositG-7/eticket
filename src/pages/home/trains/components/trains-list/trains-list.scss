@@ -1,0 +1,203 @@
+.trains__list {
+	border-radius: 15px;
+	padding: 15px;
+	margin-bottom: 2rem !important;
+	gap: 40px;
+	background-color: #fff;
+	border: 2px solid #fff;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+	.trains__items {
+		display: grid;
+		grid-template-columns: 45% 17% 17% 11%;
+		gap: 3%;
+		margin-bottom: 20px;
+
+		.time {
+			display: flex;
+			align-items: center;
+			gap: 30px;
+			.flex-column {
+				flex-direction: column !important;
+				.time_arr,
+				.time_dep {
+					font-weight: 700;
+					font-size: 26px;
+					line-height: 36px;
+				}
+				.arr_station,
+				.dep_station {
+					font-size: 16px;
+					line-height: 20px;
+				}
+			}
+			.halt_time--wrapper {
+				width: 90% !important;
+				position: relative;
+				.desktop_svg {
+					display: block;
+				}
+				.halt_time {
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					padding: 0 14px;
+					background-color: #fff;
+					color: #b0b0c6;
+				}
+			}
+		}
+
+		.train_info {
+			margin-left: 55px;
+			.train_info_detail {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				.train_brand {
+					background-color: #deb887;
+					color: #fff;
+					border-radius: 3px;
+					padding: 1px 3px;
+					font-weight: 700;
+					font-size: 12px;
+					line-height: 16px;
+				}
+				.train_number {
+					font-weight: 700;
+					font-size: 14px;
+					line-height: 16px;
+					color: #292b3f;
+				}
+			}
+			.train_station {
+				width: 200%;
+			}
+			.train_station,
+			.train_type {
+				font-size: 14px;
+				line-height: 16px;
+				color: #b0b0c6;
+			}
+		}
+
+		.car_type_visible {
+			display: flex !important;
+			flex-direction: column !important;
+			.train_seat {
+				gap: 10px;
+				display: grid;
+				grid-template-columns: 50% 10% 40%;
+				margin-bottom: 7px;
+				.train_type {
+					width: 20px;
+					margin-left: 20px;
+					color: #b0b0c6;
+				}
+				.train_type,
+				.train_seat_amount {
+					font-size: 14px;
+					line-height: 16px;
+				}
+				.train_seat_tarif {
+					font-weight: 700;
+					display: flex;
+					font-size: 16px;
+					line-height: 16px;
+					b {
+						font-weight: bolder;
+						font-size: 17px;
+					}
+					.train_seat_som {
+						color: #b0b0c6;
+						margin-left: 5px;
+					}
+				}
+			}
+		}
+
+		.info__item {
+			.btn:not(:disabled):not(.disabled) {
+				cursor: pointer;
+			}
+			.select_train {
+				padding: 5px 10px;
+				border-radius: 10px;
+				font-size: 14px;
+				line-height: 17px;
+				font-weight: 500;
+				border: 2px solid #01c3a7;
+				background-color: #fff;
+				color: #01c3a7;
+				transition: all 0.4s ease;
+				min-height: 50px;
+				width: 100%;
+			}
+			.select_train.selected,
+			.select_train:hover {
+				color: #fff;
+				background-color: #01c3a7;
+				transition: all 0.3s ease;
+				cursor: pointer;
+			}
+			.only_pay_disabled_btn {
+				background: #d2d8eb;
+				color: #fff;
+				border: none;
+			}
+			.only_pay_disabled_btn:hover {
+				cursor: pointer;
+				background: #d2d8eb;
+				color: #fff;
+				border: none;
+			}
+		}
+	}
+}
+
+.direction__item--selected {
+	border: 2px solid #01c3a7;
+	.select_train,
+	.select_train:hover {
+		color: #fff;
+		background-color: #01c3a7;
+		transition: all 0.3s ease;
+	}
+}
+
+/* bu yerda tepadigi cardni disabled holati uchun style yozilgan 👋👋👋 */
+
+.direction__item--disabled {
+	div {
+		color: #b0b0c6;
+	}
+
+	.trains__items {
+		.train_info {
+			.train_info_detail {
+				.disabled_brand {
+					background-color: #d2d8eb;
+					color: #fff !important;
+				}
+				.disabled_number {
+					color: #b0b0c6;
+				}
+			}
+		}
+
+		.info__item {
+			.disabled_btn {
+				background: #d2d8eb;
+				color: #fff;
+				border: none;
+			}
+			.disabled_btn:hover {
+				cursor: pointer;
+				background: #d2d8eb;
+				color: #fff;
+				border: none;
+			}
+		}
+	}
+}
