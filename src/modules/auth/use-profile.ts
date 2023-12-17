@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import { getSession } from 'services/store';
+import { clearSession, getSession } from 'services/store';
 
-import { Api, Mappers, Types } from '.';
+import { Api, Types } from '.';
 
 interface State {
 	isLoading: boolean;
@@ -18,10 +18,13 @@ const useProfile = (): [State, Dispatch<SetStateAction<State>>] => {
 			try {
 				const { data } = await Api.Profile();
 
-				const user = Mappers.User(data);
+				console.log(data);
 
-				setState({ user, isLoading: false });
+				setState({ user: data, isLoading: false });
 			} catch (err: any) {
+				clearSession();
+				console.log(err);
+
 				setState({ user: null, isLoading: false });
 			}
 		};

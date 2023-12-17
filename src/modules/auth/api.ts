@@ -7,7 +7,7 @@ export const Register = ({ ...params }: IApi.Register.Request) => http.post<IApi
 
 export const Login = ({ ...params }: IApi.Login.Request | IApi.Login2.Request) =>
 	http.post<IApi.Login.Response>('/api/v1/user/sign-in', { ...params });
-export const Profile = () => http.get('/user/me');
+export const Profile = () => http.get('/api/v1/user/me');
 export const Checkpassword = ({ email, code }: IApi.Checkpassword.Request) => http.post('/api/v1/user/verify', { email, code });
 export const ResetEmaill = ({ ...params }: IApi.ResetEmail.Request) => http.post('/api/v1/user/get-verification', { params });
 export const ResetPassword = ({ ...params }: IApi.ResetPassword.Request) =>
